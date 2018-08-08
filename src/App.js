@@ -4,9 +4,12 @@ import { render } from 'react-dom';
 import Critera from './containers/Criteria';
 import Results from './containers/Results';
 import { search } from './search/searchWrapper';
+import Error from "./components/Error";
 
 const methods = ['runSearch'];
+
 const defaultState = Object.freeze({
+  error: null,
   found: null
 });
 
@@ -20,27 +23,36 @@ class App extends Component {
     }
   }
 
-  async runSearch (queryString) {
-    const found = await search(queryString);
-    this.setState({
-      ...this.state,
-      found
-    });
+  async runSearch (url, queryString) {
+    try {
+      const found = await search(url, queryString);
+      this.setState({
+        ...this.state,
+        error: null,
+        found
+      });
+    } catch (error) {
+      this.setState({
+        ...this.state,
+        error,
+        found: null
+      });
+    }
   }
 
   render () {
     const { runSearch, state } = this;
-    const { found } = state;
+    const { error, found } = state;
     const criteriaProps = {
       runSearch
     };
-    const resultsProps = {
-      found
-    };
+    const results = (error)
+      ? (<Error error={error}/>)
+      : (<Results found={found} />);
     return (
       <div>
         <Critera {...criteriaProps} />
-        <Results {...resultsProps} />
+        {results}
       </div>
     )
   }

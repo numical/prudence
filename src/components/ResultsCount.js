@@ -1,17 +1,19 @@
 import React from 'react';
+import Text from "./Text";
 import PropTypes from 'prop-types';
 
 function ResultsCount(props) {
   const { found } = props;
-  let msg;
+  let text;
   if (!found) {
-    msg = 'No search yet';
+    text = 'No search yet';
   } else if (found.length > 0) {
-    msg = `${found.length} matches found`;
+    text = `${found.length} matches found`;
   } else {
-    msg = 'No matches found';
+    text = 'No matches found';
   }
-  return (<div>{msg}</div>);
+  const textProps = { text };
+  return (<Text {...textProps} />);
 }
 
 ResultsCount.propTypes = {

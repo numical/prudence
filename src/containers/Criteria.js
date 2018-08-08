@@ -1,29 +1,68 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
 import Button from '../components/Button';
-import './Container.css';
+import TextInput from "../components/TextInput";
+import './container.css';
+
+const methods = ['setQueryString', 'setURL'];
 
 const defaultState = Object.freeze({
-  queryString: 'wibble'
+  queryString: null,
+  url: 'test'
 });
 
 class Criteria extends Component {
 
   constructor (props) {
     super(props);
+    methods.forEach((method) => { this[method] = this[method].bind(this);});
     this.state = {
       ...defaultState
     }
   }
 
+  setQueryString (queryString) {
+    this.setState({
+      ...this.state,
+      queryString
+    });
+  }
+
+  setURL (url) {
+    this.setState({
+      ...this.state,
+      url
+    });
+  }
+
   render () {
-    const { props, state } = this;
+    const { props, setQueryString, setURL, state } = this;
     const { runSearch } = props;
-    const { queryString } = state;
-    const onClick = runSearch.bind(null, queryString);
+    const { queryString, url } = state;
+
+    const containerProps = {
+      id: 'criteria',
+      className: 'Container_default'
+    };
+    const urlProps = {
+      label: 'URL',
+      onChange: setURL,
+      text: url
+    };
+    const queryStringProps = {
+      label: 'Query String',
+      onChange: setQueryString,
+      text: queryString
+    };
+    const buttonProps = {
+      onClick: runSearch.bind(null, url, queryString),
+      text: 'Search'
+    };
     return (
-      <div id='criteria' className='Container_default'>
-        <Button text='Search' onClick={onClick} />
+      <div {...containerProps} >
+        <TextInput {...urlProps} />
+        <TextInput {...queryStringProps} />
+        <Button {...buttonProps} />
       </div>
     );
   }

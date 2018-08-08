@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ResultsCount from '../components/ResultsCount';
-import './Container.css';
+import './container.css';
 
 class Results extends Component {
 
