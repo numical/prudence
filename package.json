@@ -1,0 +1,31 @@
+{
+  "name": "prudence",
+  "version": "0.0.1",
+  "description": "Wrapper to GitHub Search API",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/numical/prudence.git"
+  },
+  "keywords": [
+    "github",
+    "search"
+  ],
+  "author": "Mike Evans <mike.evans@numical.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/numical/prudence/issues"
+  },
+  "homepage": "https://github.com/numical/prudence#readme",
+  "dependencies": {
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "parcel-bundler": "^1.9.7",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
+  }
+}
