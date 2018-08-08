@@ -4,6 +4,7 @@ const { expect } = require('chai');
 
 const criteriaXPath = By.xpath("//div[@id='criteria']");
 const resultsXPath = By.xpath("//div[@id='results']");
+const buttonXPath = By.xpath("//button");
 
 describe('Acceptance tests', function () {
   this.timeout(5000);
@@ -14,16 +15,43 @@ describe('Acceptance tests', function () {
     await driver.get('http://localhost:8080')
   });
 
-  it('should show the Criteria component', async() => {
-    await driver.wait(until.elementLocated(criteriaXPath));
-    const actual = await driver.findElement(criteriaXPath).getText();
-    expect(actual).to.equal('The Criteria component');
+  describe('Initial State', () => {
+
+    it('displays the Criteria component', async() => {
+      await driver.wait(until.elementLocated(criteriaXPath));
+      const element = await driver.findElement(criteriaXPath);
+      expect(element).to.exist; // actually findElement will error
+    });
+
+    it('Criteria component displays a Search button', async() => {
+      const criteria = await driver.findElement(criteriaXPath);
+      const button = criteria.findElement(buttonXPath);
+      const actual = await button.getText();
+      expect(actual).to.equal('Search');
+    });
+
+    it('displays the Results component', async() => {
+      await driver.wait(until.elementLocated(resultsXPath));
+      const actual = await driver.findElement(resultsXPath).getText();
+      expect(actual).to.equal('No search yet');
+    });
+
   });
 
-  it('should show the Results component', async() => {
-    await driver.wait(until.elementLocated(resultsXPath));
-    const actual = await driver.findElement(resultsXPath).getText();
-    expect(actual).to.equal('The Results component');
+  describe('Simple Search', () => {
+
+    before( async() => {
+      const criteria = await driver.findElement(criteriaXPath);
+      const button = criteria.findElement(buttonXPath);
+      await button.click();
+    });
+
+    it('display the results count', async() => {
+      await driver.wait(until.elementLocated(resultsXPath));
+      const actual = await driver.findElement(resultsXPath).getText();
+      expect(actual).to.equal('3 matches found');
+    });
+
   });
 
   after( async() => {

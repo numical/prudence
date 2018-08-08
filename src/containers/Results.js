@@ -1,15 +1,27 @@
 import React, { Component } from 'react';
-import './container.css';
+import PropTypes from 'prop-types';
+import ResultsCount from '../components/ResultsCount';
+import './Container.css';
 
 class Results extends Component {
 
-  render() {
+  constructor (props) {
+    super(props);
+  }
+
+  render () {
+    const { props } = this;
+    const { found } = props;
     return (
       <div id='results' className='Container_default'>
-        The Results component
+        <ResultsCount found={found} />
       </div>
     );
   }
 }
+
+Results.propTypes = {
+  found: PropTypes.array
+};
 
 export default Results;
