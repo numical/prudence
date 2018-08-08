@@ -5,7 +5,7 @@ class Results extends Component {
 
   render() {
     return (
-      <div className='Container_default'>
+      <div id='results' className='Container_default'>
         The Results component
       </div>
     );
