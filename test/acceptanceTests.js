@@ -31,10 +31,10 @@ describe('Acceptance tests', function () {
         expect(criteria).to.exist; // actually findElement will error
       });
 
-      it("displays a URL input with default text of 'test'", async () => {
+      it("displays a URL input defaulted to github repository search api", async () => {
         const input = criteria.findElement(urlInput);
         const actual = await input.getAttribute('value');
-        expect(actual).to.equal('test');
+        expect(actual).to.equal('https://api.github.com/search/repositories');
       });
 
       it("displays a blank query string input", async () => {
@@ -63,36 +63,41 @@ describe('Acceptance tests', function () {
 
   });
 
-  describe('Simple Search', () => {
-
-    before( async() => {
-      const criteria = await driver.findElement(criteriaXPath);
-      const button = criteria.findElement(buttonXPath);
-      await button.click();
-    });
-
-    it('display the results count', async() => {
-      await driver.wait(until.elementLocated(resultsXPath));
-      const actual = await driver.findElement(resultsXPath).getText();
-      expect(actual).to.equal('3 matches found');
-    });
-
-  });
-
-  describe('Error on Search', () => {
+  describe("Simple Search (url is 'test')", () => {
 
     before( async() => {
       const criteria = await driver.findElement(criteriaXPath);
       const input = criteria.findElement(urlInput);
-      await input.sendKeys('wibble');
+      await input.clear();
+      await input.sendKeys('test');
       const button = criteria.findElement(buttonXPath);
       await button.click();
     });
 
-    it("displays an error message if url is not 'test'", async() => {
+    it('display the test results count', async() => {
+      await driver.wait(until.elementLocated(resultsXPath));
+      const actual = await driver.findElement(resultsXPath).getText();
+      expect(actual).to.equal('1196 items found');
+    });
+
+  });
+
+  describe("Error on Search (url is 'error')", () => {
+
+    before( async() => {
+      const criteria = await driver.findElement(criteriaXPath);
+      const input = criteria.findElement(urlInput);
+      await input.clear();
+      await input.sendKeys('error');
+      const button = criteria.findElement(buttonXPath);
+      await button.click();
+    });
+
+    it("displays an error message", async() => {
       await driver.wait(until.elementLocated(errorXPath));
       const actual = await driver.findElement(errorXPath).getText();
       expect(actual).to.include('the search reported an error');
+      expect(actual).to.include('Test Error');
     });
 
   });

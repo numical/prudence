@@ -2,9 +2,9 @@ import 'babel-polyfill';
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import Critera from './containers/Criteria';
+import Error from "./containers/Error";
 import Results from './containers/Results';
 import { search } from './search/searchWrapper';
-import Error from "./components/Error";
 
 const methods = ['runSearch'];
 

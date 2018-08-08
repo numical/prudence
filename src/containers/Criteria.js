@@ -7,8 +7,8 @@ import './container.css';
 const methods = ['setQueryString', 'setURL'];
 
 const defaultState = Object.freeze({
-  queryString: null,
-  url: 'test'
+  queryString: null, // 'q=tetris+language:assembly',
+  url: 'https://api.github.com/search/repositories'
 });
 
 class Criteria extends Component {

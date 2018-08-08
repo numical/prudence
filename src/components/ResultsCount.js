@@ -7,8 +7,8 @@ function ResultsCount(props) {
   let text;
   if (!found) {
     text = 'No search yet';
-  } else if (found.length > 0) {
-    text = `${found.length} matches found`;
+  } else if (found.total_count) {
+    text = `${found.total_count} items found`;
   } else {
     text = 'No matches found';
   }
@@ -17,7 +17,7 @@ function ResultsCount(props) {
 }
 
 ResultsCount.propTypes = {
-  found: PropTypes.array
+  found: PropTypes.object
 };
 
 export default ResultsCount;

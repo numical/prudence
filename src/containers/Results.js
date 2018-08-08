@@ -21,7 +21,7 @@ class Results extends Component {
 }
 
 Results.propTypes = {
-  found: PropTypes.array
+  found: PropTypes.object
 };
 
 export default Results;
