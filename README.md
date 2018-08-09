@@ -3,6 +3,8 @@ Wrapper to GitHub search API
 
 This code is in early development stage.
 
+Please see the [wiki](https://github.com/numical/prudence/wiki) for more detail.
+
 ## Pre-requisites
 node 8+
 
