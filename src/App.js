@@ -2,7 +2,7 @@ import 'babel-polyfill';
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import Critera from './containers/Criteria';
-import Error from "./containers/Error";
+import Error from './containers/Error';
 import Results from './containers/Results';
 import { search } from './search/searchWrapper';
 
@@ -14,13 +14,12 @@ const defaultState = Object.freeze({
 });
 
 class App extends Component {
-
   constructor (props) {
     super(props);
-    methods.forEach((method) => { this[method] = this[method].bind(this);});
+    methods.forEach((method) => { this[method] = this[method].bind(this); });
     this.state = {
       ...defaultState
-    }
+    };
   }
 
   async runSearch (url, queryString) {
@@ -47,16 +46,15 @@ class App extends Component {
       runSearch
     };
     const results = (error)
-      ? (<Error error={error}/>)
+      ? (<Error error={error} />)
       : (<Results found={found} />);
     return (
       <div>
         <Critera {...criteriaProps} />
         {results}
       </div>
-    )
+    );
   }
 }
 
 render(<App />, document.getElementById('app'));
-

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 import Button from '../components/Button';
-import TextInput from "../components/TextInput";
+import TextInput from '../components/TextInput';
 import './container.css';
 
 const methods = ['setQueryString', 'setURL'];
@@ -12,13 +12,12 @@ const defaultState = Object.freeze({
 });
 
 class Criteria extends Component {
-
   constructor (props) {
     super(props);
-    methods.forEach((method) => { this[method] = this[method].bind(this);});
+    methods.forEach((method) => { this[method] = this[method].bind(this); });
     this.state = {
       ...defaultState
-    }
+    };
   }
 
   setQueryString (queryString) {

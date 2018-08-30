@@ -11,6 +11,6 @@ function Text (props) {
 
 Text.propTypes = {
   text: PropTypes.string.isRequired
-}
+};
 
 export default Text;

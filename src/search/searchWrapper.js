@@ -1,3 +1,5 @@
+/* global fetch */
+
 import testResults from './testResults.json';
 
 const fetchOptions = Object.freeze({
@@ -23,7 +25,7 @@ const httpSearch = async(url, queryString) => {
 };
 
 const search = async(url, queryString) => {
-  switch(url){
+  switch (url) {
     case 'error':
       throw new Error('Test Error');
     case 'test':

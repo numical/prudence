@@ -2,22 +2,20 @@ import React from 'react';
 import Text from './Text';
 import PropTypes from 'prop-types';
 
-function ResultsCount (props) {
+function RawResults (props) {
   const { found } = props;
   let text;
   if (!found) {
-    text = 'No search yet';
-  } else if (found.total_count) {
-    text = `${found.total_count} items found`;
+    text = '';
   } else {
-    text = 'No matches found';
+    text = JSON.stringify(found, null, 2);
   }
   const textProps = { text };
   return (<Text {...textProps} />);
 }
 
-ResultsCount.propTypes = {
+RawResults.propTypes = {
   found: PropTypes.object
 };
 
-export default ResultsCount;
+export default RawResults;

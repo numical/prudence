@@ -8,7 +8,7 @@ function TextInput (props) {
     className: 'Component_default',
     id: label,
     onChange: onChange ? (event) => onChange(event.target.value) : null,
-    value: (text) ? text : '',
+    value: (text) || '',
     type: 'text'
   };
   const labelProps = {
