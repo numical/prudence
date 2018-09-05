@@ -1,10 +1,12 @@
+/* global describe before after it */
+
 const { Builder, By, until } = require('selenium-webdriver');
 const { expect } = require('chai');
 
 const xPathById = (name, id) => By.xpath(`//${name}[@id='${id}']`);
 const criteriaXPath = xPathById('div', 'criteria');
 const resultsXPath = xPathById('div', 'results');
-const buttonXPath = By.xpath("//button");
+const buttonXPath = By.xpath('//button');
 const urlInput = xPathById('input', 'URL');
 const queryStringInput = xPathById('input', 'Query String');
 const errorXPath = xPathById('div', 'error');
@@ -13,31 +15,30 @@ describe('Acceptance tests', function () {
   this.timeout(5000);
   let driver;
 
-  before( async() => {
+  before(async() => {
     driver = await new Builder().forBrowser('chrome').build();
-    await driver.get('http://localhost:8080')
+    await driver.get('http://localhost:8080');
   });
 
   describe('Initial State', () => {
-
     describe('Criteria component', () => {
       let criteria;
-      before( async() => {
+      before(async() => {
         await driver.wait(until.elementLocated(criteriaXPath));
-        criteria =  await driver.findElement(criteriaXPath);
+        criteria = await driver.findElement(criteriaXPath);
       });
 
       it('is displayed', async () => {
         expect(criteria).to.exist; // actually findElement will error
       });
 
-      it("displays a URL input defaulted to github repository search api", async () => {
+      it('displays a URL input defaulted to github repository search api', async () => {
         const input = criteria.findElement(urlInput);
         const actual = await input.getAttribute('value');
         expect(actual).to.equal('https://api.github.com/search/repositories');
       });
 
-      it("displays a blank query string input", async () => {
+      it('displays a blank query string input', async () => {
         const input = criteria.findElement(queryStringInput);
         const actual = await input.getAttribute('value');
         expect(actual).to.equal('');
@@ -52,20 +53,16 @@ describe('Acceptance tests', function () {
     });
 
     describe('Results component', () => {
-
       it('is displayed', async () => {
         await driver.wait(until.elementLocated(resultsXPath));
         const actual = await driver.findElement(resultsXPath).getText();
         expect(actual).to.equal('No search yet');
       });
-
     });
-
   });
 
   describe("Simple Search (url is 'test')", () => {
-
-    before( async() => {
+    before(async() => {
       const criteria = await driver.findElement(criteriaXPath);
       const input = criteria.findElement(urlInput);
       await input.clear();
@@ -77,14 +74,12 @@ describe('Acceptance tests', function () {
     it('display the test results count', async() => {
       await driver.wait(until.elementLocated(resultsXPath));
       const actual = await driver.findElement(resultsXPath).getText();
-      expect(actual).to.equal('1196 items found');
+      expect(actual).to.include('1196 items found');
     });
-
   });
 
   describe("Error on Search (url is 'error')", () => {
-
-    before( async() => {
+    before(async() => {
       const criteria = await driver.findElement(criteriaXPath);
       const input = criteria.findElement(urlInput);
       await input.clear();
@@ -93,16 +88,15 @@ describe('Acceptance tests', function () {
       await button.click();
     });
 
-    it("displays an error message", async() => {
+    it('displays an error message', async() => {
       await driver.wait(until.elementLocated(errorXPath));
       const actual = await driver.findElement(errorXPath).getText();
       expect(actual).to.include('the search reported an error');
       expect(actual).to.include('Test Error');
     });
-
   });
 
-  after( async() => {
+  after(async() => {
     await driver.quit();
   });
 });
